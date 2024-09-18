@@ -1,0 +1,78 @@
+{
+    "$id": "cper-json-cxl-component-section",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": ["length", "validationBits", "deviceID", "deviceSerial"],
+    "additionalProperties": false,
+    "properties": {
+        "length": {
+            "type": "integer"
+        },
+        "validationBits": {
+            "type": "object",
+            "required": [
+                "deviceIDValid",
+                "deviceSerialValid",
+                "cxlComponentEventLogValid"
+            ],
+            "properties": {
+                "deviceIDValid": {
+                    "type": "boolean"
+                },
+                "deviceSerialValid": {
+                    "type": "boolean"
+                },
+                "cxlComponentEventLogValid": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "deviceID": {
+            "type": "object",
+            "required": [
+                "vendorID",
+                "deviceID",
+                "functionNumber",
+                "deviceNumber",
+                "busNumber",
+                "segmentNumber",
+                "slotNumber"
+            ],
+            "properties": {
+                "vendorID": {
+                    "type": "integer"
+                },
+                "deviceID": {
+                    "type": "integer"
+                },
+                "functionNumber": {
+                    "type": "integer"
+                },
+                "deviceNumber": {
+                    "type": "integer"
+                },
+                "busNumber": {
+                    "type": "integer"
+                },
+                "segmentNumber": {
+                    "type": "integer"
+                },
+                "slotNumber": {
+                    "type": "integer"
+                }
+            }
+        },
+        "deviceSerial": {
+            "type": "integer"
+        },
+        "cxlComponentEventLog": {
+            "type": "object",
+            "required": ["data"],
+            "properties": {
+                "data": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

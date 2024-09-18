@@ -1,0 +1,22 @@
+{
+    "$id": "cper-json-firmware-section",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": ["errorRecordType", "revision", "recordID", "recordIDGUID"],
+    "additionalProperties": false,
+    "properties": {
+        "errorRecordType": {
+            "type": "object",
+            "$ref": "./common/cper-json-nvp.json"
+        },
+        "revision": {
+            "type": "integer"
+        },
+        "recordID": {
+            "type": "integer"
+        },
+        "recordIDGUID": {
+            "type": "string"
+        }
+    }
+}

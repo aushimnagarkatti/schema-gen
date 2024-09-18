@@ -1,0 +1,53 @@
+{
+    "$id": "cper-json-generic-dmar-section",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+        "requesterID",
+        "segmentNumber",
+        "faultReason",
+        "accessType",
+        "addressType",
+        "architectureType",
+        "deviceAddress"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "requesterID": {
+            "type": "integer"
+        },
+        "segmentNumber": {
+            "type": "integer"
+        },
+        "faultReason": {
+            "type": "object",
+            "required": ["value", "name"],
+            "properties": {
+                "value": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            }
+        },
+        "accessType": {
+            "type": "object",
+            "$ref": "./common/cper-json-nvp.json"
+        },
+        "addressType": {
+            "type": "object",
+            "$ref": "./common/cper-json-nvp.json"
+        },
+        "architectureType": {
+            "type": "object",
+            "$ref": "./common/cper-json-nvp.json"
+        },
+        "deviceAddress": {
+            "type": "integer"
+        }
+    }
+}

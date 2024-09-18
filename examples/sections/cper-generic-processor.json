@@ -1,0 +1,141 @@
+{
+    "$id": "cper-json-generic-processor-section",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+        "validationBits",
+        "processorType",
+        "processorISA",
+        "errorType",
+        "operation",
+        "flags",
+        "level",
+        "cpuVersionInfo",
+        "cpuBrandString",
+        "processorID",
+        "targetAddress",
+        "requestorID",
+        "responderID",
+        "instructionIP"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "validationBits": {
+            "type": "object",
+            "required": [
+                "processorTypeValid",
+                "processorISAValid",
+                "processorErrorTypeValid",
+                "operationValid",
+                "flagsValid",
+                "levelValid",
+                "cpuVersionValid",
+                "cpuBrandInfoValid",
+                "cpuIDValid",
+                "targetAddressValid",
+                "requestorIDValid",
+                "responderIDValid",
+                "instructionIPValid"
+            ],
+            "properties": {
+                "processorTypeValid": {
+                    "type": "boolean"
+                },
+                "processorISAValid": {
+                    "type": "boolean"
+                },
+                "processorErrorTypeValid": {
+                    "type": "boolean"
+                },
+                "operationValid": {
+                    "type": "boolean"
+                },
+                "flagsValid": {
+                    "type": "boolean"
+                },
+                "levelValid": {
+                    "type": "boolean"
+                },
+                "cpuVersionValid": {
+                    "type": "boolean"
+                },
+                "cpuBrandInfoValid": {
+                    "type": "boolean"
+                },
+                "cpuIDValid": {
+                    "type": "boolean"
+                },
+                "targetAddressValid": {
+                    "type": "boolean"
+                },
+                "requestorIDValid": {
+                    "type": "boolean"
+                },
+                "responderIDValid": {
+                    "type": "boolean"
+                },
+                "instructionIPValid": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "processorType": {
+            "type": "object",
+            "$ref": "./common/cper-json-nvp.json"
+        },
+        "processorISA": {
+            "type": "object",
+            "$ref": "./common/cper-json-nvp.json"
+        },
+        "errorType": {
+            "type": "object",
+            "$ref": "./common/cper-json-nvp.json"
+        },
+        "operation": {
+            "type": "object",
+            "$ref": "./common/cper-json-nvp.json"
+        },
+        "flags": {
+            "type": "object",
+            "required": ["restartable", "preciseIP", "overflow", "corrected"],
+            "properties": {
+                "restartable": {
+                    "type": "boolean"
+                },
+                "preciseIP": {
+                    "type": "boolean"
+                },
+                "overflow": {
+                    "type": "boolean"
+                },
+                "corrected": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "level": {
+            "type": "integer"
+        },
+        "cpuVersionInfo": {
+            "type": "integer"
+        },
+        "cpuBrandString": {
+            "type": "string"
+        },
+        "processorID": {
+            "type": "integer"
+        },
+        "targetAddress": {
+            "type": "integer"
+        },
+        "requestorID": {
+            "type": "integer"
+        },
+        "responderID": {
+            "type": "integer"
+        },
+        "instructionIP": {
+            "type": "integer"
+        }
+    }
+}

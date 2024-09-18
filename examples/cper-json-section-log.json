@@ -1,0 +1,35 @@
+{
+    "type": "object",
+    "required": ["sectionDescriptor", "section"],
+    "additionalProperties": false,
+    "properties": {
+        "header": {
+            "$ref": "./cper-json-header.json"
+        },
+        "sectionDescriptor": {
+            "$ref": "./cper-json-section-descriptor.json"
+        },
+        "section": {
+            "type": "object",
+            "oneOf": [
+                { "$ref": "./sections/cper-generic-processor.json" },
+                { "$ref": "./sections/cper-ia32x64-processor.json" },
+                { "$ref": "./sections/cper-arm-processor.json" },
+                { "$ref": "./sections/cper-memory.json" },
+                { "$ref": "./sections/cper-memory2.json" },
+                { "$ref": "./sections/cper-pcie.json" },
+                { "$ref": "./sections/cper-pci-bus.json" },
+                { "$ref": "./sections/cper-pci-component.json" },
+                { "$ref": "./sections/cper-firmware.json" },
+                { "$ref": "./sections/cper-generic-dmar.json" },
+                { "$ref": "./sections/cper-vtd-dmar.json" },
+                { "$ref": "./sections/cper-iommu-dmar.json" },
+                { "$ref": "./sections/cper-ccix-per.json" },
+                { "$ref": "./sections/cper-cxl-protocol.json" },
+                { "$ref": "./sections/cper-cxl-component.json" },
+                { "$ref": "./sections/cper-nvidia.json" },
+                { "$ref": "./sections/cper-unknown.json" }
+            ]
+        }
+    }
+}

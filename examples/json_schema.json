@@ -1,0 +1,14 @@
+{
+    "type": "object",
+    "required": ["section"],
+    "additionalProperties": false,
+    "properties": {
+        "section": {
+            "type": "object",
+            "oneOf": [
+                { "$ref": "./sections/cper-nvidia.json" },
+                { "$ref": "./sections/cper-unknown.json" }
+            ]
+        }
+    }
+}

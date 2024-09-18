@@ -1,0 +1,220 @@
+{
+    "$id": "cper-json-memory2-section",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+        "validationBits",
+        "errorStatus",
+        "bank",
+        "memoryErrorType",
+        "status",
+        "physicalAddress",
+        "physicalAddressMask",
+        "node",
+        "card",
+        "module",
+        "device",
+        "row",
+        "column",
+        "bitPosition",
+        "rank",
+        "chipID",
+        "requestorID",
+        "responderID",
+        "targetID",
+        "cardSmbiosHandle",
+        "moduleSmbiosHandle"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "validationBits": {
+            "type": "object",
+            "required": [
+                "errorStatusValid",
+                "physicalAddressValid",
+                "physicalAddressMaskValid",
+                "nodeValid",
+                "cardValid",
+                "moduleValid",
+                "bankValid",
+                "deviceValid",
+                "rowValid",
+                "columnValid",
+                "rankValid",
+                "bitPositionValid",
+                "chipIDValid",
+                "memoryErrorTypeValid",
+                "statusValid",
+                "requestorIDValid",
+                "responderIDValid",
+                "targetIDValid",
+                "cardHandleValid",
+                "moduleHandleValid",
+                "bankGroupValid",
+                "bankAddressValid"
+            ],
+            "properties": {
+                "errorStatusValid": {
+                    "type": "boolean"
+                },
+                "physicalAddressValid": {
+                    "type": "boolean"
+                },
+                "physicalAddressMaskValid": {
+                    "type": "boolean"
+                },
+                "nodeValid": {
+                    "type": "boolean"
+                },
+                "cardValid": {
+                    "type": "boolean"
+                },
+                "moduleValid": {
+                    "type": "boolean"
+                },
+                "bankValid": {
+                    "type": "boolean"
+                },
+                "deviceValid": {
+                    "type": "boolean"
+                },
+                "rowValid": {
+                    "type": "boolean"
+                },
+                "columnValid": {
+                    "type": "boolean"
+                },
+                "rankValid": {
+                    "type": "boolean"
+                },
+                "bitPositionValid": {
+                    "type": "boolean"
+                },
+                "chipIDValid": {
+                    "type": "boolean"
+                },
+                "memoryErrorTypeValid": {
+                    "type": "boolean"
+                },
+                "statusValid": {
+                    "type": "boolean"
+                },
+                "requestorIDValid": {
+                    "type": "boolean"
+                },
+                "responderIDValid": {
+                    "type": "boolean"
+                },
+                "targetIDValid": {
+                    "type": "boolean"
+                },
+                "cardHandleValid": {
+                    "type": "boolean"
+                },
+                "moduleHandleValid": {
+                    "type": "boolean"
+                },
+                "bankGroupValid": {
+                    "type": "boolean"
+                },
+                "bankAddressValid": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "errorStatus": {
+            "type": "object",
+            "$ref": "./common/cper-json-error-status.json"
+        },
+        "bank": {
+            "type": "object",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "required": ["value"],
+                    "properties": {
+                        "value": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "required": ["address", "group"],
+                    "properties": {
+                        "address": {
+                            "type": "integer"
+                        },
+                        "group": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            ]
+        },
+        "memoryErrorType": {
+            "type": "object",
+            "$ref": "./common/cper-json-nvp.json"
+        },
+        "status": {
+            "type": "object",
+            "required": ["value", "state"],
+            "properties": {
+                "value": {
+                    "type": "integer"
+                },
+                "state": {
+                    "type": "string"
+                }
+            }
+        },
+        "physicalAddress": {
+            "type": "integer"
+        },
+        "physicalAddressMask": {
+            "type": "integer"
+        },
+        "node": {
+            "type": "integer"
+        },
+        "card": {
+            "type": "integer"
+        },
+        "module": {
+            "type": "integer"
+        },
+        "device": {
+            "type": "integer"
+        },
+        "row": {
+            "type": "integer"
+        },
+        "column": {
+            "type": "integer"
+        },
+        "bitPosition": {
+            "type": "integer"
+        },
+        "rank": {
+            "type": "integer"
+        },
+        "chipID": {
+            "type": "integer"
+        },
+        "requestorID": {
+            "type": "integer"
+        },
+        "responderID": {
+            "type": "integer"
+        },
+        "targetID": {
+            "type": "integer"
+        },
+        "cardSmbiosHandle": {
+            "type": "integer"
+        },
+        "moduleSmbiosHandle": {
+            "type": "integer"
+        }
+    }
+}

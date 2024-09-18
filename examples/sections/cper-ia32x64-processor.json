@@ -1,0 +1,565 @@
+{
+    "$id": "cper-json-ia32x54-processor-section",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+        "validationBits",
+        "localAPICID",
+        "cpuidInfo",
+        "processorErrorInfo",
+        "processorContextInfo"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "validationBits": {
+            "type": "object",
+            "required": [
+                "localAPICIDValid",
+                "cpuIDInfoValid",
+                "processorErrorInfoNum",
+                "processorContextInfoNum"
+            ],
+            "properties": {
+                "localAPICIDValid": {
+                    "type": "boolean"
+                },
+                "cpuIDInfoValid": {
+                    "type": "boolean"
+                },
+                "processorErrorInfoNum": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "processorContextInfoNum": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            }
+        },
+        "localAPICID": {
+            "type": "integer"
+        },
+        "cpuidInfo": {
+            "type": "object",
+            "required": ["eax", "ebx", "ecx", "edx"],
+            "properties": {
+                "eax": {
+                    "type": "integer"
+                },
+                "ebx": {
+                    "type": "integer"
+                },
+                "ecx": {
+                    "type": "integer"
+                },
+                "edx": {
+                    "type": "integer"
+                }
+            }
+        },
+        "processorErrorInfo": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "type",
+                    "validationBits",
+                    "checkInfo",
+                    "targetAddressID",
+                    "requestorID",
+                    "responderID",
+                    "instructionPointer"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "type": "object",
+                        "required": ["guid", "name"],
+                        "properties": {
+                            "guid": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "validationBits": {
+                        "type": "object",
+                        "required": [
+                            "checkInfoValid",
+                            "targetAddressIDValid",
+                            "requestorIDValid",
+                            "responderIDValid",
+                            "instructionPointerValid"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                            "checkInfoValid": {
+                                "type": "boolean"
+                            },
+                            "targetAddressIDValid": {
+                                "type": "boolean"
+                            },
+                            "requestorIDValid": {
+                                "type": "boolean"
+                            },
+                            "responderIDValid": {
+                                "type": "boolean"
+                            },
+                            "instructionPointerValid": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "checkInfo": {
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "required": [
+                                    "validationBits",
+                                    "transactionType",
+                                    "operation",
+                                    "level",
+                                    "processorContextCorrupt",
+                                    "uncorrected",
+                                    "preciseIP",
+                                    "restartableIP",
+                                    "overflow"
+                                ],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "validationBits": {
+                                        "type": "object",
+                                        "required": [
+                                            "transactionTypeValid",
+                                            "operationValid",
+                                            "levelValid",
+                                            "processorContextCorruptValid",
+                                            "uncorrectedValid",
+                                            "preciseIPValid",
+                                            "restartableIPValid",
+                                            "overflowValid"
+                                        ],
+                                        "properties": {
+                                            "transactionTypeValid": {
+                                                "type": "boolean"
+                                            },
+                                            "operationValid": {
+                                                "type": "boolean"
+                                            },
+                                            "levelValid": {
+                                                "type": "boolean"
+                                            },
+                                            "processorContextCorruptValid": {
+                                                "type": "boolean"
+                                            },
+                                            "uncorrectedValid": {
+                                                "type": "boolean"
+                                            },
+                                            "preciseIPValid": {
+                                                "type": "boolean"
+                                            },
+                                            "restartableIPValid": {
+                                                "type": "boolean"
+                                            },
+                                            "overflowValid": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    },
+                                    "transactionType": {
+                                        "type": "object",
+                                        "$ref": "./common/cper-json-nvp.json"
+                                    },
+                                    "operation": {
+                                        "type": "object",
+                                        "$ref": "./common/cper-json-nvp.json"
+                                    },
+                                    "level": {
+                                        "type": "integer",
+                                        "minimum": 0
+                                    },
+                                    "processorContextCorrupt": {
+                                        "type": "boolean"
+                                    },
+                                    "uncorrected": {
+                                        "type": "boolean"
+                                    },
+                                    "preciseIP": {
+                                        "type": "boolean"
+                                    },
+                                    "restartableIP": {
+                                        "type": "boolean"
+                                    },
+                                    "overflow": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "object",
+                                "required": [
+                                    "validationBits",
+                                    "transactionType",
+                                    "operation",
+                                    "level",
+                                    "processorContextCorrupt",
+                                    "uncorrected",
+                                    "preciseIP",
+                                    "restartableIP",
+                                    "overflow",
+                                    "participationType",
+                                    "timedOut",
+                                    "addressSpace"
+                                ],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "validationBits": {
+                                        "type": "object",
+                                        "required": [
+                                            "transactionTypeValid",
+                                            "operationValid",
+                                            "levelValid",
+                                            "processorContextCorruptValid",
+                                            "uncorrectedValid",
+                                            "preciseIPValid",
+                                            "restartableIPValid",
+                                            "overflowValid",
+                                            "participationTypeValid",
+                                            "timedOutValid",
+                                            "addressSpaceValid"
+                                        ],
+                                        "properties": {
+                                            "transactionTypeValid": {
+                                                "type": "boolean"
+                                            },
+                                            "operationValid": {
+                                                "type": "boolean"
+                                            },
+                                            "levelValid": {
+                                                "type": "boolean"
+                                            },
+                                            "processorContextCorruptValid": {
+                                                "type": "boolean"
+                                            },
+                                            "uncorrectedValid": {
+                                                "type": "boolean"
+                                            },
+                                            "preciseIPValid": {
+                                                "type": "boolean"
+                                            },
+                                            "restartableIPValid": {
+                                                "type": "boolean"
+                                            },
+                                            "overflowValid": {
+                                                "type": "boolean"
+                                            },
+                                            "participationTypeValid": {
+                                                "type": "boolean"
+                                            },
+                                            "timedOutValid": {
+                                                "type": "boolean"
+                                            },
+                                            "addressSpaceValid": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    },
+                                    "transactionType": {
+                                        "type": "object",
+                                        "$ref": "./common/cper-json-nvp.json"
+                                    },
+                                    "operation": {
+                                        "type": "object",
+                                        "$ref": "./common/cper-json-nvp.json"
+                                    },
+                                    "level": {
+                                        "type": "integer",
+                                        "minimum": 0
+                                    },
+                                    "processorContextCorrupt": {
+                                        "type": "boolean"
+                                    },
+                                    "uncorrected": {
+                                        "type": "boolean"
+                                    },
+                                    "preciseIP": {
+                                        "type": "boolean"
+                                    },
+                                    "restartableIP": {
+                                        "type": "boolean"
+                                    },
+                                    "overflow": {
+                                        "type": "boolean"
+                                    },
+                                    "participationType": {
+                                        "type": "object",
+                                        "$ref": "./common/cper-json-nvp.json"
+                                    },
+                                    "addressSpace": {
+                                        "type": "object",
+                                        "$ref": "./common/cper-json-nvp.json"
+                                    },
+                                    "timedOut": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "object",
+                                "required": [],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "validationBits": {
+                                        "type": "object",
+                                        "required": [
+                                            "errorTypeValid",
+                                            "processorContextCorruptValid",
+                                            "uncorrectedValid",
+                                            "preciseIPValid",
+                                            "restartableIPValid",
+                                            "overflowValid"
+                                        ],
+                                        "properties": {
+                                            "errorTypeValid": {
+                                                "type": "boolean"
+                                            },
+                                            "processorContextCorruptValid": {
+                                                "type": "boolean"
+                                            },
+                                            "uncorrectedValid": {
+                                                "type": "boolean"
+                                            },
+                                            "preciseIPValid": {
+                                                "type": "boolean"
+                                            },
+                                            "restartableIPValid": {
+                                                "type": "boolean"
+                                            },
+                                            "overflowValid": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    },
+                                    "errorType": {
+                                        "type": "object",
+                                        "$ref": "./common/cper-json-nvp.json"
+                                    },
+                                    "processorContextCorrupt": {
+                                        "type": "boolean"
+                                    },
+                                    "uncorrected": {
+                                        "type": "boolean"
+                                    },
+                                    "preciseIP": {
+                                        "type": "boolean"
+                                    },
+                                    "restartableIP": {
+                                        "type": "boolean"
+                                    },
+                                    "overflow": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "targetAddressID": {
+                        "type": "integer"
+                    },
+                    "requestorID": {
+                        "type": "integer"
+                    },
+                    "responderID": {
+                        "type": "integer"
+                    },
+                    "instructionPointer": {
+                        "type": "integer"
+                    }
+                }
+            }
+        },
+        "processorContextInfo": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "registerContextType",
+                    "registerArraySize",
+                    "msrAddress",
+                    "mmRegisterAddress"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                    "registerContextType": {
+                        "type": "object",
+                        "$ref": "./common/cper-json-nvp.json"
+                    },
+                    "registerArraySize": {
+                        "type": "integer"
+                    },
+                    "msrAddress": {
+                        "type": "integer"
+                    },
+                    "mmRegisterAddress": {
+                        "type": "integer"
+                    },
+                    "registerArray": {
+                        "type": "object",
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "required": [
+                                    "eax",
+                                    "ebx",
+                                    "ecx",
+                                    "edx",
+                                    "esi",
+                                    "edi",
+                                    "ebp",
+                                    "esp",
+                                    "cs",
+                                    "ds",
+                                    "ss",
+                                    "es",
+                                    "fs",
+                                    "gs",
+                                    "eflags",
+                                    "eip",
+                                    "cr0",
+                                    "cr1",
+                                    "cr2",
+                                    "cr3",
+                                    "cr4",
+                                    "gdtr",
+                                    "idtr",
+                                    "ldtr",
+                                    "tr"
+                                ],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "eax": { "type": "integer" },
+                                    "ebx": { "type": "integer" },
+                                    "ecx": { "type": "integer" },
+                                    "edx": { "type": "integer" },
+                                    "esi": { "type": "integer" },
+                                    "edi": { "type": "integer" },
+                                    "ebp": { "type": "integer" },
+                                    "esp": { "type": "integer" },
+                                    "cs": { "type": "integer" },
+                                    "ds": { "type": "integer" },
+                                    "ss": { "type": "integer" },
+                                    "es": { "type": "integer" },
+                                    "fs": { "type": "integer" },
+                                    "gs": { "type": "integer" },
+                                    "eflags": { "type": "integer" },
+                                    "eip": { "type": "integer" },
+                                    "cr0": { "type": "integer" },
+                                    "cr1": { "type": "integer" },
+                                    "cr2": { "type": "integer" },
+                                    "cr3": { "type": "integer" },
+                                    "cr4": { "type": "integer" },
+                                    "gdtr": { "type": "integer" },
+                                    "idtr": { "type": "integer" },
+                                    "ldtr": { "type": "integer" },
+                                    "tr": { "type": "integer" }
+                                }
+                            },
+                            {
+                                "type": "object",
+                                "required": [
+                                    "rax",
+                                    "rbx",
+                                    "rcx",
+                                    "rdx",
+                                    "rsi",
+                                    "rdi",
+                                    "rbp",
+                                    "rsp",
+                                    "r8",
+                                    "r9",
+                                    "r10",
+                                    "r11",
+                                    "r12",
+                                    "r13",
+                                    "r14",
+                                    "r15",
+                                    "cs",
+                                    "ds",
+                                    "es",
+                                    "fs",
+                                    "gs",
+                                    "rflags",
+                                    "eip",
+                                    "cr0",
+                                    "cr1",
+                                    "cr2",
+                                    "cr3",
+                                    "cr4",
+                                    "cr8",
+                                    "gdtr_0",
+                                    "gdtr_1",
+                                    "idtr_0",
+                                    "idtr_1",
+                                    "ldtr",
+                                    "tr"
+                                ],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "rax": { "type": "integer" },
+                                    "rbx": { "type": "integer" },
+                                    "rcx": { "type": "integer" },
+                                    "rdx": { "type": "integer" },
+                                    "rsi": { "type": "integer" },
+                                    "rdi": { "type": "integer" },
+                                    "rbp": { "type": "integer" },
+                                    "rsp": { "type": "integer" },
+                                    "r8": { "type": "integer" },
+                                    "r9": { "type": "integer" },
+                                    "r10": { "type": "integer" },
+                                    "r11": { "type": "integer" },
+                                    "r12": { "type": "integer" },
+                                    "r13": { "type": "integer" },
+                                    "r14": { "type": "integer" },
+                                    "r15": { "type": "integer" },
+                                    "cs": { "type": "integer" },
+                                    "ds": { "type": "integer" },
+                                    "ss": { "type": "integer" },
+                                    "es": { "type": "integer" },
+                                    "fs": { "type": "integer" },
+                                    "gs": { "type": "integer" },
+                                    "rflags": { "type": "integer" },
+                                    "eip": { "type": "integer" },
+                                    "cr0": { "type": "integer" },
+                                    "cr1": { "type": "integer" },
+                                    "cr2": { "type": "integer" },
+                                    "cr3": { "type": "integer" },
+                                    "cr4": { "type": "integer" },
+                                    "cr8": { "type": "integer" },
+                                    "gdtr_0": { "type": "integer" },
+                                    "gdtr_1": { "type": "integer" },
+                                    "idtr_0": { "type": "integer" },
+                                    "idtr_1": { "type": "integer" },
+                                    "ldtr": { "type": "integer" },
+                                    "tr": { "type": "integer" }
+                                }
+                            },
+                            {
+                                "type": "object",
+                                "required": ["data"],
+                                "additionalProperties": false,
+                                "properties": {
+                                    "data": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

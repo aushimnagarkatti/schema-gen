@@ -1,0 +1,103 @@
+{
+    "$id": "cper-json-pci-component-section",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+        "validationBits",
+        "errorStatus",
+        "idInfo",
+        "memoryNumber",
+        "ioNumber",
+        "registerDataPairs"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "validationBits": {
+            "type": "object",
+            "required": [
+                "errorStatusValid",
+                "idInfoValid",
+                "memoryNumberValid",
+                "ioNumberValid",
+                "registerDataPairsValid"
+            ],
+            "properties": {
+                "errorStatusValid": {
+                    "type": "boolean"
+                },
+                "idInfoValid": {
+                    "type": "boolean"
+                },
+                "memoryNumberValid": {
+                    "type": "boolean"
+                },
+                "ioNumberValid": {
+                    "type": "boolean"
+                },
+                "registerDataPairsValid": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "errorStatus": {
+            "type": "object",
+            "$ref": "./common/cper-json-error-status.json"
+        },
+        "idInfo": {
+            "type": "object",
+            "required": [
+                "vendorID",
+                "deviceID",
+                "classCode",
+                "functionNumber",
+                "deviceNumber",
+                "busNumber",
+                "segmentNumber"
+            ],
+            "properties": {
+                "vendorID": {
+                    "type": "integer"
+                },
+                "deviceID": {
+                    "type": "integer"
+                },
+                "classCode": {
+                    "type": "integer"
+                },
+                "functionNumber": {
+                    "type": "integer"
+                },
+                "deviceNumber": {
+                    "type": "integer"
+                },
+                "busNumber": {
+                    "type": "integer"
+                },
+                "segmentNumber": {
+                    "type": "integer"
+                }
+            }
+        },
+        "memoryNumber": {
+            "type": "integer"
+        },
+        "ioNumber": {
+            "type": "integer"
+        },
+        "registerDataPairs": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["firstHalf", "secondHalf"],
+                "properties": {
+                    "firstHalf": {
+                        "type": "integer"
+                    },
+                    "secondHalf": {
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    }
+}

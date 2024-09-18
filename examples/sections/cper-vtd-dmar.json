@@ -1,0 +1,119 @@
+{
+    "$id": "cper-json-vtd-dmar-section",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+        "version",
+        "revision",
+        "oemID",
+        "capabilityRegister",
+        "extendedCapabilityRegister",
+        "globalCommandRegister",
+        "globalStatusRegister",
+        "faultStatusRegister",
+        "faultRecord",
+        "rootEntry",
+        "contextEntry",
+        "pageTableEntry_Level6",
+        "pageTableEntry_Level5",
+        "pageTableEntry_Level4",
+        "pageTableEntry_Level3",
+        "pageTableEntry_Level2",
+        "pageTableEntry_Level1"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "version": {
+            "type": "integer"
+        },
+        "revision": {
+            "type": "integer"
+        },
+        "oemID": {
+            "type": "integer"
+        },
+        "capabilityRegister": {
+            "type": "integer"
+        },
+        "extendedCapabilityRegister": {
+            "type": "integer"
+        },
+        "globalCommandRegister": {
+            "type": "integer"
+        },
+        "globalStatusRegister": {
+            "type": "integer"
+        },
+        "faultStatusRegister": {
+            "type": "integer"
+        },
+        "faultRecord": {
+            "type": "object",
+            "required": [
+                "faultInformation",
+                "sourceIdentifier",
+                "privelegeModeRequested",
+                "executePermissionRequested",
+                "pasidPresent",
+                "faultReason",
+                "pasidValue",
+                "addressType",
+                "type"
+            ],
+            "properties": {
+                "faultInformation": {
+                    "type": "integer"
+                },
+                "sourceIdentifier": {
+                    "type": "integer"
+                },
+                "privelegeModeRequested": {
+                    "type": "boolean"
+                },
+                "executePermissionRequested": {
+                    "type": "boolean"
+                },
+                "pasidPresent": {
+                    "type": "boolean"
+                },
+                "faultReason": {
+                    "type": "integer"
+                },
+                "pasidValue": {
+                    "type": "integer"
+                },
+                "addressType": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "object",
+                    "$ref": "./common/cper-json-nvp.json"
+                }
+            }
+        },
+        "rootEntry": {
+            "type": "string"
+        },
+        "contextEntry": {
+            "type": "string"
+        },
+        "pageTableEntry_Level6": {
+            "type": "integer"
+        },
+        "pageTableEntry_Level5": {
+            "type": "integer"
+        },
+        "pageTableEntry_Level4": {
+            "type": "integer"
+        },
+        "pageTableEntry_Level3": {
+            "type": "integer"
+        },
+        "pageTableEntry_Level2": {
+            "type": "integer"
+        },
+        "pageTableEntry_Level1": {
+            "type": "integer"
+        }
+    }
+}

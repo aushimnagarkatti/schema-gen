@@ -1,0 +1,101 @@
+{
+    "$id": "cper-json-pci-bus-section",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+        "validationBits",
+        "errorStatus",
+        "errorType",
+        "busID",
+        "busAddress",
+        "busData",
+        "busCommandType",
+        "busRequestorID",
+        "busCompleterID",
+        "targetID"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "validationBits": {
+            "type": "object",
+            "required": [
+                "errorStatusValid",
+                "errorTypeValid",
+                "busIDValid",
+                "busAddressValid",
+                "busDataValid",
+                "commandValid",
+                "requestorIDValid",
+                "completerIDValid",
+                "targetIDValid"
+            ],
+            "properties": {
+                "errorStatusValid": {
+                    "type": "boolean"
+                },
+                "errorTypeValid": {
+                    "type": "boolean"
+                },
+                "busIDValid": {
+                    "type": "boolean"
+                },
+                "busAddressValid": {
+                    "type": "boolean"
+                },
+                "busDataValid": {
+                    "type": "boolean"
+                },
+                "commandValid": {
+                    "type": "boolean"
+                },
+                "requestorIDValid": {
+                    "type": "boolean"
+                },
+                "completerIDValid": {
+                    "type": "boolean"
+                },
+                "targetIDValid": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "errorStatus": {
+            "type": "object",
+            "$ref": "./common/cper-json-error-status.json"
+        },
+        "errorType": {
+            "type": "object",
+            "$ref": "./common/cper-json-nvp.json"
+        },
+        "busID": {
+            "type": "object",
+            "required": ["busNumber", "segmentNumber"],
+            "properties": {
+                "busNumber": {
+                    "type": "integer"
+                },
+                "segmentNumber": {
+                    "type": "integer"
+                }
+            }
+        },
+        "busAddress": {
+            "type": "integer"
+        },
+        "busData": {
+            "type": "integer"
+        },
+        "busCommandType": {
+            "type": "string"
+        },
+        "busRequestorID": {
+            "type": "integer"
+        },
+        "busCompleterID": {
+            "type": "integer"
+        },
+        "targetID": {
+            "type": "integer"
+        }
+    }
+}

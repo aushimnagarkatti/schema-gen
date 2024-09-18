@@ -1,0 +1,162 @@
+{
+    "$id": "cper-json-pcie-section",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+        "validationBits",
+        "portType",
+        "version",
+        "commandStatus",
+        "deviceID",
+        "deviceSerialNumber",
+        "bridgeControlStatus",
+        "capabilityStructure",
+        "aerInfo"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "validationBits": {
+            "type": "object",
+            "required": [
+                "portTypeValid",
+                "versionValid",
+                "commandStatusValid",
+                "deviceIDValid",
+                "deviceSerialNumberValid",
+                "bridgeControlStatusValid",
+                "capabilityStructureStatusValid",
+                "aerInfoValid"
+            ],
+            "properties": {
+                "portTypeValid": {
+                    "type": "boolean"
+                },
+                "versionValid": {
+                    "type": "boolean"
+                },
+                "commandStatusValid": {
+                    "type": "boolean"
+                },
+                "deviceIDValid": {
+                    "type": "boolean"
+                },
+                "deviceSerialNumberValid": {
+                    "type": "boolean"
+                },
+                "bridgeControlStatusValid": {
+                    "type": "boolean"
+                },
+                "capabilityStructureStatusValid": {
+                    "type": "boolean"
+                },
+                "aerInfoValid": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "portType": {
+            "type": "object",
+            "$ref": "./common/cper-json-nvp.json"
+        },
+        "version": {
+            "type": "object",
+            "required": ["major", "minor"],
+            "properties": {
+                "major": {
+                    "type": "integer"
+                },
+                "minor": {
+                    "type": "integer"
+                }
+            }
+        },
+        "commandStatus": {
+            "type": "object",
+            "required": ["commandRegister", "statusRegister"],
+            "properties": {
+                "commandRegister": {
+                    "type": "integer"
+                },
+                "statusRegister": {
+                    "type": "integer"
+                }
+            }
+        },
+        "deviceID": {
+            "type": "object",
+            "required": [
+                "vendorID",
+                "deviceID",
+                "classCode",
+                "functionNumber",
+                "deviceNumber",
+                "segmentNumber",
+                "primaryOrDeviceBusNumber",
+                "secondaryBusNumber",
+                "slotNumber"
+            ],
+            "properties": {
+                "vendorID": {
+                    "type": "integer"
+                },
+                "deviceID": {
+                    "type": "integer"
+                },
+                "classCode": {
+                    "type": "integer"
+                },
+                "functionNumber": {
+                    "type": "integer"
+                },
+                "deviceNumber": {
+                    "type": "integer"
+                },
+                "segmentNumber": {
+                    "type": "integer"
+                },
+                "primaryOrDeviceBusNumber": {
+                    "type": "integer"
+                },
+                "secondaryBusNumber": {
+                    "type": "integer"
+                },
+                "slotNumber": {
+                    "type": "integer"
+                }
+            }
+        },
+        "deviceSerialNumber": {
+            "type": "integer"
+        },
+        "bridgeControlStatus": {
+            "type": "object",
+            "required": ["secondaryStatusRegister", "controlRegister"],
+            "properties": {
+                "secondaryStatusRegister": {
+                    "type": "integer"
+                },
+                "controlRegister": {
+                    "type": "integer"
+                }
+            }
+        },
+        "capabilityStructure": {
+            "type": "object",
+            "required": ["data"],
+            "properties": {
+                "data": {
+                    "type": "string"
+                }
+            }
+        },
+        "aerInfo": {
+            "type": "object",
+            "required": ["data"],
+            "properties": {
+                "data": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

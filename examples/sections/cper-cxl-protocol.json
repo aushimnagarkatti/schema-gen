@@ -1,0 +1,143 @@
+{
+    "$id": "cper-json-cxl-protocol-section",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": [
+        "validationBits",
+        "agentType",
+        "cxlAgentAddress",
+        "deviceID",
+        "dvsecLength",
+        "errorLogLength",
+        "cxlDVSEC",
+        "cxlErrorLog"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "validationBits": {
+            "type": "object",
+            "required": [
+                "cxlAgentTypeValid",
+                "cxlAgentAddressValid",
+                "deviceIDValid",
+                "deviceSerialValid",
+                "capabilityStructureValid",
+                "cxlDVSECValid",
+                "cxlErrorLogValid"
+            ],
+            "properties": {
+                "cxlAgentTypeValid": {
+                    "type": "boolean"
+                },
+                "cxlAgentAddressValid": {
+                    "type": "boolean"
+                },
+                "deviceIDValid": {
+                    "type": "boolean"
+                },
+                "deviceSerialValid": {
+                    "type": "boolean"
+                },
+                "capabilityStructureValid": {
+                    "type": "boolean"
+                },
+                "cxlDVSECValid": {
+                    "type": "boolean"
+                },
+                "cxlErrorLogValid": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "agentType": {
+            "type": "object",
+            "$ref": "./common/cper-json-nvp.json"
+        },
+        "cxlAgentAddress": {
+            "type": "object",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "required": [
+                        "functionNumber",
+                        "deviceNumber",
+                        "busNumber",
+                        "segmentNumber"
+                    ],
+                    "properties": {
+                        "functionNumber": {
+                            "type": "integer"
+                        },
+                        "deviceNumber": {
+                            "type": "integer"
+                        },
+                        "busNumber": {
+                            "type": "integer"
+                        },
+                        "segmentNumber": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                {
+                    "type": "object",
+                    "required": ["value"],
+                    "properties": {
+                        "value": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            ]
+        },
+        "deviceID": {
+            "type": "object",
+            "required": [
+                "vendorID",
+                "deviceID",
+                "subsystemVendorID",
+                "subsystemDeviceID",
+                "classCode",
+                "slotNumber"
+            ],
+            "properties": {
+                "vendorID": {
+                    "type": "integer"
+                },
+                "deviceID": {
+                    "type": "integer"
+                },
+                "subsystemVendorID": {
+                    "type": "integer"
+                },
+                "subsystemDeviceID": {
+                    "type": "integer"
+                },
+                "classCode": {
+                    "type": "integer"
+                },
+                "slotNumber": {
+                    "type": "integer"
+                }
+            }
+        },
+        "deviceSerial": {
+            "type": "integer"
+        },
+        "capabilityStructure": {
+            "type": "string"
+        },
+        "dvsecLength": {
+            "type": "integer"
+        },
+        "errorLogLength": {
+            "type": "integer"
+        },
+        "cxlDVSEC": {
+            "type": "string"
+        },
+        "cxlErrorLog": {
+            "type": "string"
+        }
+    }
+}
