@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 """
 Allows conversion of multiple json schemas into a single
@@ -17,6 +17,22 @@ import os
 import xml.dom.minidom 
 import argparse
 
+HEADER = '''<?xml version="1.0" encoding="UTF-8"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+  <edmx:Reference Uri="http://docs.oasis-open.org/odata/odata/v4.0/errata03/csd01/complete/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Namespace="Org.OData.Core.V1" Alias="OData"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="http://redfish.dmtf.org/schemas/v1/RedfishExtensions_v1.xml">
+    <edmx:Include Namespace="Validation.v1_0_0" Alias="Validation"/>
+    <edmx:Include Namespace="RedfishExtensions.v1_0_0" Alias="Redfish"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="NvidiaCPER.v1_0_0">
+'''
+FOOTER = '''
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>'''
 
 class SchemaGenerator:
     
@@ -107,12 +123,6 @@ class SchemaGenerator:
     
     def capitalize(self, propname):
         return propname[0].upper() + propname[1:]
-
-
-
-
-    
-
 
 
 class JsontoXml:
@@ -222,7 +232,7 @@ class JsontoXml:
                 xml += end
             return (property_xml + xml, None)
 
-    def schema_parser(self, schema, header="", footer="", basetype="NvidiaCPER", baseid=""):
+    def schema_parser(self, schema, basetype="NvidiaCPER", baseid=""):
         """
         Wrapper around jsonschema_to_xml
         Args:
@@ -235,7 +245,7 @@ class JsontoXml:
         Returns:
             result (string): XML schema for CPER output
         """
-        xml_out = header
+        xml_out = HEADER
         start_property = self.start_property
         base_schema = { "required": [start_property], 'properties' : { start_property: {} } }
         while not schema.get(start_property):
@@ -252,7 +262,7 @@ class JsontoXml:
         schema = schema[start_property]
         base_schema['properties'][start_property] = schema
         xml_out += self.jsonschema_to_xml(base_schema, basetype=basetype, baseid=baseid)[0]
-        xml_out += footer
+        xml_out += FOOTER
 
         return xml_out
 
@@ -296,19 +306,21 @@ class JsontoXml:
             result (string): XML schema for CPER output
         """
         # val = self.format_propname(val)
-        val = baseid + val[0].upper() + val[1:]
+        entity_name = baseid+ val[0].upper() + val[1:]
+        prop_name = val[0].upper() + val[1:]
+        prop_type = baseid + val[0].upper() + val[1:]
         if ele == "base":
             # print("in encode_xml: args baseid: %s , val: %s, basetype: %s"%(baseid, val, basetype))
-            return "\n<EntityType Name=\"" + val +"\">\n", "</EntityType>\n"
+            return "\n      <EntityType Name=\"" + entity_name +"\">\n", "      </EntityType>\n"
         elif ele == "property":
             if self.parent_basetype:
                 basetype = self.parent_basetype
             else:
                 basetype = basetype[0].upper() + basetype[1:]
             if (type == 'object' or type == 'array'):
-                return ("<Property Name=\"" + val +"\" Type=\"" + basetype + "."  + val + "\"></Property>\n")  
+                return ("          <Property Name=\"" + prop_name +"\" Type=\"" + basetype + "."  + prop_type + "\"></Property>\n")  
             else:
-                return ("<Property Name=\"" + val +"\" Type=\"" + self.typemap[type] + "\"></Property>\n")
+                return ("          <Property Name=\"" + prop_name +"\" Type=\"" + self.typemap[type] + "\"></Property>\n")
         else:
             print("wrong value for XML element: ", ele)
 
