@@ -150,8 +150,9 @@ class JsontoXml:
         self.parent_basetype = parent_basetype
         self.required = required
         self.start_property = start_property
+        self.error_status_present = False
     
-    def jsonschema_to_xml(self, schema, basetype, baseid):
+    def jsonschema_to_xml(self, schema, basetype, baseid, prevproperty=""):
         """
         Replace all references of $ref with actual json file contents
         Args:
@@ -169,13 +170,20 @@ class JsontoXml:
             req = schema.get('required')
             if req:
                 assert isinstance(req, list), "request field is not a list"
+
+                if (baseid + basetype).lower() == "errorstatuserrortype":
+                    if not self.error_status_present:
+                        self.error_status_present = True
+                    else:
+                        return ("", "")
+
                 props = schema.get('properties')
                 if not props:
                     print("'Required' field was found. 'Properties' field not found for: \n", schema)
                     return(1)
                     
                 id = schema.get('$id')
-                if (basetype == self.start_property and id):
+                if (id and "namevaluepair" not in id):
                     basetype = self.format_propname(id)
                 start,end = self.encode_xml(baseid, basetype, 'base')
                 property_xml = start
@@ -186,7 +194,10 @@ class JsontoXml:
                 if id:
                     baseid = self.format_propname(id)
                     ret_id = baseid
+                    self.id = id
 
+                if ('validationbits' in basetype.lower()):
+                    baseid+=prevproperty
                     
                 xml_ret = ""
                 for prop, propval in props.items():
@@ -195,9 +206,11 @@ class JsontoXml:
                     if self.debug:
                         print(prop)
                     # Get each property
+                    if (prop.lower() == 'validationbits'):
+                        baseid+=basetype
                     subschema = propval
                     property_xml += self.encode_xml(baseid, prop, 'property', type=subschema['type'], basetype=basetype)
-                    xml_ret += self.jsonschema_to_xml(propval, prop, baseid)[0]
+                    xml_ret += self.jsonschema_to_xml(propval, prop, baseid, prevproperty=basetype)[0]
                     
                 property_xml += end
                 xml_ret += property_xml
@@ -208,29 +221,35 @@ class JsontoXml:
 
             else: 
                 if schema.get('oneOf'):
-                    return self.jsonschema_to_xml(schema['oneOf'], basetype, baseid)
+                    return self.jsonschema_to_xml(schema['oneOf'], basetype, baseid, prevproperty)
                 elif schema.get('items'):
-                    return self.jsonschema_to_xml(schema['items'], basetype, baseid)
+                    return self.jsonschema_to_xml(schema['items'], basetype, baseid, prevproperty)
                 else:
                     return ("", None)
             
         elif isinstance(schema, list):
             property_xml = ""
             properties_oneof = []
-            for item in schema:
-                xml, ret_id = self.jsonschema_to_xml(item, basetype, baseid)
+            for i, item in enumerate(schema):
+                # print("in oneof, basetype:", basetype, json.dumps(item, indent=1))
+                xml, ret_id = self.jsonschema_to_xml(item, basetype, baseid, "")
                 property_xml += xml
                 if ret_id:
                     properties_oneof.append(ret_id)
+                else:
+                    idstr = 'cper-json-' + baseid.lower() + '-' + basetype.lower()+ str(i)
+                    print("\"$id\": \"" + idstr + "\",")
 
             #This works only if $id is defined for every oneof[]
             if len(properties_oneof):
                 xml,end = self.encode_xml(baseid, basetype, 'base')
                 for prop in properties_oneof:
+                    print(baseid, prop)
                     xml += self.encode_xml(baseid, prop, 'property', 'object', basetype=basetype)
                 
                 xml += end
             return (property_xml + xml, None)
+    
 
     def schema_parser(self, schema, basetype="NvidiaCPER", baseid=""):
         """
@@ -326,6 +345,17 @@ class JsontoXml:
 
     def append_to_xml(self, xml, arg):
         return xml + arg
+
+    def validate_xml(self, xmlf):
+        entity_names=[]
+        with open(xmlf, 'r') as f:
+            for line in f:
+                if ("EntityType Name" in line):
+                    name = line.strip().split('=')[1]
+                    if name in entity_names:
+                        print("Duplicate: ", name)
+                    else:
+                        entity_names.append(name)
             
 
 
@@ -354,6 +384,8 @@ if __name__ == "__main__":
     parser_b.add_argument('-x', '--header', nargs=1, help= "XML header")
     parser_b.add_argument('-f', '--footer', nargs=1, help= "XML footer")
     parser_b.add_argument('-r', '--required', help= "Only consider required fields", action='store_true')
+    parser_b.add_argument('-z', '--validate', help= "Validate XML", action='store_true')
+
 
 
     args = parser.parse_args()
@@ -372,7 +404,8 @@ if __name__ == "__main__":
         output = "master-schema.json"
         print("Output filename: ", output)
         with open(output, 'w') as f:
-            json.dump(master_schema, f)
+            print(json.dumps(master_schema, indent=1), file=f)
+            # json.dump(master_schema, f)
 
 
     elif args.subparser_name == 'json_to_xml':
@@ -403,6 +436,9 @@ if __name__ == "__main__":
 
         # logfile='cper-json-full-log.json'
         # masterfile = 'master-schema.json'
+        if (args.validate):
+            xml_obj.validate_xml(args.schema[0])
+            exit(0)
 
         schema = xml_obj.get_schema_file(args.schema[0])
         output = xml_obj.schema_parser(schema)
