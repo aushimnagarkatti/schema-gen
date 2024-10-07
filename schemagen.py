@@ -27,12 +27,14 @@ HEADER = '''<?xml version="1.0" encoding="UTF-8"?>
     <edmx:Include Namespace="RedfishExtensions.v1_0_0" Alias="Redfish"/>
   </edmx:Reference>
   <edmx:DataServices>
-    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="NvidiaCPER.v1_0_0">
+    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Nvidia.v1_0_0">
 '''
 FOOTER = '''
     </Schema>
   </edmx:DataServices>
 </edmx:Edmx>'''
+
+SKIP_KEYS = ["ArmProcessorArmProcessorerrorInfoErrorInformation"]
 
 class SchemaGenerator:
     
@@ -48,7 +50,7 @@ class SchemaGenerator:
         """
         self.ref_paths={}
         self.rootpath = rootpath
-        self.base_schema=json.load(open(os.path.join(schema_directory, base_schema)))
+        self.base_schema=json.load(open(os.path.join(rootpath, base_schema)))
         self.map_schemas(rootpath)
         
     def map_schemas(self, schema_dir):
@@ -251,7 +253,7 @@ class JsontoXml:
             return (property_xml + xml, None)
     
 
-    def schema_parser(self, schema, basetype="NvidiaCPER", baseid=""):
+    def schema_parser(self, schema, basetype="Nvidia", baseid=""):
         """
         Wrapper around jsonschema_to_xml
         Args:
@@ -266,7 +268,7 @@ class JsontoXml:
         """
         xml_out = HEADER
         start_property = self.start_property
-        base_schema = { "required": [start_property], 'properties' : { start_property: {} } }
+        # base_schema = { "required": ['Nvidia'], 'properties' : { 'Nvidia': {} } }
         while not schema.get(start_property):
             if schema.get('oneOf'):
                 schema = schema['oneOf'][0]
@@ -279,7 +281,7 @@ class JsontoXml:
                 print("ERROR could not find ", start_property)
                 return
         schema = schema[start_property]
-        base_schema['properties'][start_property] = schema
+        base_schema = schema
         xml_out += self.jsonschema_to_xml(base_schema, basetype=basetype, baseid=baseid)[0]
         xml_out += FOOTER
 
@@ -381,6 +383,7 @@ if __name__ == "__main__":
     parser_b.add_argument('-v', '--verbose', action='store_true')
     parser_b.add_argument('-s', '--schema', nargs=1, help= "Input json schema", required=True)
     parser_b.add_argument('-p', '--parent-basetype', nargs=1, help= "Basetype for all elements to inherit")
+    parser_b.add_argument('-a', '--argstart', nargs=1, help= "Property of json schema to start parsing from")
     parser_b.add_argument('-x', '--header', nargs=1, help= "XML header")
     parser_b.add_argument('-f', '--footer', nargs=1, help= "XML footer")
     parser_b.add_argument('-r', '--required', help= "Only consider required fields", action='store_true')
@@ -424,7 +427,12 @@ if __name__ == "__main__":
         if args.parent_basetype:
             parent_basetype = args.parent_basetype[0]
         else:
-            parent_basetype = "NvidiaCPER"
+            parent_basetype = "Nvidia"
+        
+        if args.argstart:
+            argstart = args.argstart[0]
+        else:
+            argstart = "sections"
         
         print("header is: ", header)
         print("footer is: ", footer)
@@ -432,7 +440,7 @@ if __name__ == "__main__":
         print("required is: ", args.required)
 
         # #JSON to XML conversion
-        xml_obj = JsontoXml(debug=args.verbose, parent_basetype=parent_basetype, required=args.required)
+        xml_obj = JsontoXml(debug=args.verbose, parent_basetype=parent_basetype, required=args.required, start_property=argstart)
 
         # logfile='cper-json-full-log.json'
         # masterfile = 'master-schema.json'
